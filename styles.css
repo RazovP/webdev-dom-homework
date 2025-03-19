@@ -20,7 +20,9 @@ body {
     padding: 0;
     list-style: none;
   }
-
+  .comment:hover {
+    cursor: pointer;
+  }
   .comment,
   .add-form {
     width: 596px;
