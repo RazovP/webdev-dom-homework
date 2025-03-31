@@ -129,6 +129,8 @@
     comments[comments.length++] = { name: nameInput.value.replaceAll("<", "&lt;").replaceAll(">","&gt;"), date: dateString, commentText: commentInput.value.replaceAll("<", "&lt;").replaceAll(">","&gt;"), likeCounter: 0, aktiveLike: false }
     nameInput.value = '';
     commentInput.value = '';
+    commentInput.classList.remove('input-error');
+    nameInput.classList.remove('input-error');
     renderComments();
   })
   console.log("It works!");
