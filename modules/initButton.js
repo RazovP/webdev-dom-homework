@@ -1,5 +1,6 @@
 import { comments } from "./comments.js";
 import { renderComments } from "./renderComments.js";
+import { escHtml } from "./escHtml.js";
 
 export const initLikeButton = () => {
   const buttonElements = document.querySelectorAll(".like-button");
@@ -60,11 +61,9 @@ addButton.addEventListener("click", () => {
   const dateString =
     now.toLocaleDateString("ru-RU") + " " + now.toLocaleTimeString("ru-RU");
   comments[comments.length++] = {
-    name: nameInput.value.replaceAll("<", "&lt;").replaceAll(">", "&gt;"),
+    name: escHtml(nameInput.value),
     date: dateString,
-    commentText: commentInput.value
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;"),
+    commentText: escHtml(commentInput.value),
     likeCounter: 0,
     aktiveLike: false,
   };
