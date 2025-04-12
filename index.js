@@ -1,7 +1,7 @@
 import { renderComments } from './modules/renderComments.js'
-import { newComment } from './modules/initButton.js'
+import { initAddListenerNewComment } from './modules/initListeners.js'
 
 renderComments()
-newComment()
+initAddListenerNewComment()
 
 console.log('It works!')

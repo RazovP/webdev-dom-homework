@@ -2,7 +2,7 @@ import { comments } from "./comments.js";
 import { renderComments } from "./renderComments.js";
 import { escHtml } from "./escHtml.js";
 
-export const initLikeButton = () => {
+export const initAddListenersLikeComment = () => {
   const buttonElements = document.querySelectorAll(".like-button");
   for (const buttonEl of buttonElements) {
     buttonEl.addEventListener("click", (event) => {
@@ -22,7 +22,7 @@ export const initLikeButton = () => {
   }
 };
 
-export const callComment = () => {
+export const initAddListenersReplyComment = () => {
   const commentElements = document.querySelectorAll(".comment");
   commentElements.forEach((commentEl) => {
     commentEl.addEventListener("click", () => {
@@ -36,7 +36,7 @@ export const callComment = () => {
   });
 };
 
-export const newComment = () =>{
+export const initAddListenerNewComment = () =>{
 const addButton = document.querySelector(".add-form-button");
 addButton.addEventListener("click", () => {
   const nameInput = document.querySelector(".add-form-name");
