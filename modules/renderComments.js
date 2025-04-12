@@ -1,9 +1,9 @@
-import { comments } from "./comments.js";
-import { initLikeButton } from "./initButton.js";
-import { callComment } from "./initButton.js";
+import { comments } from './comments.js'
+import { initAddListenersLikeComment } from './initListeners.js'
+import { initAddListenersReplyComment } from './initListeners.js'
 
 export const renderComments = () => {
-  const commentBlock = document.querySelector(".comments");
+  const commentBlock = document.querySelector('.comments')
   const commentsHtml = comments
     .map((comment, index) => {
       return `<li class="comment" data-index="${index}">
@@ -21,16 +21,16 @@ export const renderComments = () => {
             <span class="likes-counter">${comment.likeCounter}</span>
             
             <button data-index="${index}" class="like-button ${
-        comment.aktiveLike ? "-active-like" : ""
-      }"></button>
+              comment.aktiveLike ? '-active-like' : ''
+            }"></button>
            
           </div>
         </div>
-      </li>`;
+      </li>`
     })
-    .join("");
+    .join('')
 
-  commentBlock.innerHTML = commentsHtml;
-  initLikeButton();
-  callComment();
-};
+  commentBlock.innerHTML = commentsHtml
+  initAddListenersLikeComment()
+  initAddListenersReplyComment()
+}
