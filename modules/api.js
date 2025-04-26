@@ -1,6 +1,6 @@
 
 
-const host ="https://wedev-api.sky.pro/api/v1/test1/comments"
+const host ="https://wedev-api.sky.pro/api/v1/test/comments"
 export const fetchComments = () => {
     return fetch(host).then(res =>{
         return res.json()
@@ -18,5 +18,17 @@ export const fetchComments = () => {
             }
         })
         return appComments
+    })
+}
+
+export const postComment =(text, name) => {
+    return fetch(host, {
+        method: "POST",
+        body: JSON.stringify({
+            text,
+            name,  
+        })
+    }).then(() =>{
+        return fetchComments()
     })
 }
