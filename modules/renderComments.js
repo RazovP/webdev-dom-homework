@@ -1,4 +1,5 @@
 import { comments } from './comments.js'
+import { formatDate } from './formatDate.js'
 import { initAddListenersLikeComment } from './initListeners.js'
 import { initAddListenersReplyComment } from './initListeners.js'
 
@@ -9,7 +10,7 @@ export const renderComments = () => {
       return `<li class="comment" data-index="${index}">
         <div class="comment-header">
           <div>${comment.name}</div>
-          <div>${comment.date}</div>
+          <div>${formatDate(comment.date)}</div>
         </div>
         <div class="comment-body">
           <div class="comment-text">
