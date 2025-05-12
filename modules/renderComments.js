@@ -4,6 +4,7 @@ import { initAddListenersLikeComment } from './initListeners.js'
 import { initAddListenersReplyComment } from './initListeners.js'
 
 export const renderComments = () => {
+  const loadText = document.querySelector('.loadText')
   const commentBlock = document.querySelector('.comments')
   const commentsHtml = comments
     .map((comment, index) => {
@@ -32,6 +33,7 @@ export const renderComments = () => {
     .join('')
 
   commentBlock.innerHTML = commentsHtml
+  loadText.style.display = 'none'
   initAddListenersLikeComment()
   initAddListenersReplyComment()
 }

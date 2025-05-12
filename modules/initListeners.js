@@ -2,6 +2,7 @@ import { comments, updateComments } from './comments.js'
 import { renderComments } from './renderComments.js'
 import { escHtml } from './escHtml.js'
 import { postComment } from './api.js'
+import { delay } from './delay.js'
 
 export const initAddListenersLikeComment = () => {
   const buttonElements = document.querySelectorAll('.like-button')
@@ -9,16 +10,23 @@ export const initAddListenersLikeComment = () => {
     buttonEl.addEventListener('click', (event) => {
       event.stopPropagation()
       const index = buttonEl.dataset.index
+      const comment = comments[index]
+      comment.isLikeLoading = true;
+      buttonEl.classList.add('-loading-like');
+      delay(2000).then(() => {
+        if (comments[index].aktiveLike) {
+          comments[index].likeCounter--
+          comments[index].aktiveLike = false
+        } else {
+          comments[index].likeCounter++
+          comments[index].aktiveLike = true
+          
+        }
+        comment.isLikeLoading = false
+        buttonEl.classList.remove('-loading-like')
+        renderComments()
+      })
 
-      if (comments[index].aktiveLike) {
-        comments[index].likeCounter--
-        comments[index].aktiveLike = false
-      } else {
-        comments[index].likeCounter++
-        comments[index].aktiveLike = true
-      }
-
-      renderComments()
     })
   }
 }
@@ -39,6 +47,8 @@ export const initAddListenersReplyComment = () => {
 
 export const initAddListenerNewComment = () => {
   const addButton = document.querySelector('.add-form-button')
+  const loadTextComment = document.querySelector('.loadTextComment');
+  const addForm = document.querySelector('.add-form');
   addButton.addEventListener('click', () => {
     const nameInput = document.querySelector('.add-form-name')
     const commentInput = document.querySelector('.add-form-text')
@@ -57,6 +67,8 @@ export const initAddListenerNewComment = () => {
     if (hasError) {
       return
     }
+    loadTextComment.style.display = 'block';
+    addForm.style.display = 'none';
 
 
 
@@ -67,6 +79,9 @@ export const initAddListenerNewComment = () => {
         commentInput.value = ''
         commentInput.classList.remove('input-error')
         nameInput.classList.remove('input-error')
+
+        loadTextComment.style.display = 'none';
+        addForm.style.display = 'flex';
         renderComments()
       },
     )
