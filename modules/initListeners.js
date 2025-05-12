@@ -39,6 +39,8 @@ export const initAddListenersReplyComment = () => {
 
 export const initAddListenerNewComment = () => {
   const addButton = document.querySelector('.add-form-button')
+   const loadTextComment = document.querySelector('.loadTextComment');
+  const addForm = document.querySelector('.add-form');
   addButton.addEventListener('click', () => {
     const nameInput = document.querySelector('.add-form-name')
     const commentInput = document.querySelector('.add-form-text')
@@ -57,6 +59,8 @@ export const initAddListenerNewComment = () => {
     if (hasError) {
       return
     }
+    loadTextComment.style.display = 'block';
+    addForm.style.display = 'none';
 
 
 
@@ -67,6 +71,9 @@ export const initAddListenerNewComment = () => {
         commentInput.value = ''
         commentInput.classList.remove('input-error')
         nameInput.classList.remove('input-error')
+
+        loadTextComment.style.display = 'none';
+        addForm.style.display = 'flex';
         renderComments()
       },
     )
