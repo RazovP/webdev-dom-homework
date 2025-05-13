@@ -21,7 +21,7 @@ export const fetchComments = () => {
         })
 }
 
-export const postComment = (name, text) => {
+export const postComment = (name, text, retryCount = 3) => {
     return fetch(host, {
         method: "POST",
         body: JSON.stringify({
@@ -32,7 +32,13 @@ export const postComment = (name, text) => {
     })
         .then((response) => {
             if (response.status === 500) {
+                 if (retryCount > 0) {
+                console.warn(`Ошибка 500, повторная попытка... Осталось попыток: ${retryCount}`);
+                return  postComment(name, text, retryCount - 1); // Повторная попытка
+            } else {
                 throw new Error("Сервер сломался");
+            }
+
             }
 
             if (response.status === 400) {
