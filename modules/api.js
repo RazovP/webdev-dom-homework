@@ -31,13 +31,14 @@ export const postComment = (name, text, retryCount = 3) => {
         })
     })
         .then((response) => {
+            console.log(response.status)
             if (response.status === 500) {
-                 if (retryCount > 0) {
-                console.warn(`Ошибка 500, повторная попытка... Осталось попыток: ${retryCount}`);
-                return  postComment(name, text, retryCount - 1); // Повторная попытка
-            } else {
-                throw new Error("Сервер сломался");
-            }
+                if (retryCount > 0) {
+                    console.warn(`Ошибка 500, повторная попытка... Осталось попыток: ${retryCount}`);
+                    return postComment(name, text, retryCount - 1); // Повторная попытка
+                } else {
+                    throw new Error("Сервер сломался");
+                }
 
             }
 
@@ -56,6 +57,10 @@ export const postComment = (name, text, retryCount = 3) => {
         })
 
         .catch((error) => {
+            if (error instanceof TypeError) {
+                alert("Проблема с подключением к интернету. Проверьте ваше соединение.");
+                return;
+            }
             if (error.message === "Сервер сломался") {
                 alert("Сервер сломался, попробуй позже");
                 return;
