@@ -20,7 +20,7 @@ export const initAddListenersLikeComment = () => {
         } else {
           comments[index].likeCounter++
           comments[index].aktiveLike = true
-          
+
         }
         comment.isLikeLoading = false
         buttonEl.classList.remove('-loading-like')
@@ -49,9 +49,19 @@ export const initAddListenerNewComment = () => {
   const addButton = document.querySelector('.add-form-button')
   const loadTextComment = document.querySelector('.loadTextComment');
   const addForm = document.querySelector('.add-form');
+  const nameInput = document.querySelector('.add-form-name')
+  const commentInput = document.querySelector('.add-form-text')
+  let commentInputValue = '';
+  let nameInputValue = ''
+  nameInput.addEventListener('input', (event) => {
+    nameInputValue = event.target.value;
+  });
+
+  commentInput.addEventListener('input', (event) => {
+    commentInputValue = event.target.value;
+  });
+
   addButton.addEventListener('click', () => {
-    const nameInput = document.querySelector('.add-form-name')
-    const commentInput = document.querySelector('.add-form-text')
 
     let hasError = false
 
@@ -72,11 +82,13 @@ export const initAddListenerNewComment = () => {
 
 
 
+
     postComment(escHtml(nameInput.value), escHtml(commentInput.value)).then(
       (data) => {
         updateComments(data)
         nameInput.value = ''
         commentInput.value = ''
+
         commentInput.classList.remove('input-error')
         nameInput.classList.remove('input-error')
 
@@ -85,7 +97,12 @@ export const initAddListenerNewComment = () => {
         renderComments()
       },
     )
+      .catch((error) => {
 
-
-  })
+        nameInput.value = nameInputValue;
+        commentInput.value = commentInputValue;
+        loadTextComment.style.display = 'none';
+        addForm.style.display = 'flex';
+      })
+})
 }
