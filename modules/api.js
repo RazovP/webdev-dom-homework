@@ -1,8 +1,9 @@
 
 
-const host = "https://wedev-api.sky.pro/api/v1/test/comments"
+const host = "https://wedev-api.sky.pro/api/v2/Test"
+let token = ''
 export const fetchComments = () => {
-    return fetch(host).then(res => {
+    return fetch(`${host}/comments`).then(res => {
         return res.json()
     })
         .then(responseData => {
@@ -22,8 +23,12 @@ export const fetchComments = () => {
 }
 
 export const postComment = (name, text, retryCount = 3) => {
-    return fetch(host, {
+    return fetch(`${host}/comments`, {
         method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Добавьте токен авторизации, если требуется
+        },
         body: JSON.stringify({
             name,
             text,
